@@ -1,0 +1,118 @@
+<div class="card">
+    <div class="card-header">
+        Register
+    </div>
+    
+    <div class="card-body">
+        <form novalidate
+              (ngSubmit)="onRegister()"
+              [formGroup]="registerForm">
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="firstNameId">First Name</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="firstNameId"
+                           type="text" 
+                           placeholder="First Name (required)"
+                           formControlName="firstName"
+                           [ngClass]="{'is-invalid': displayMessage.firstName }"                       
+                         />
+                    <span class="invalid-feedback">
+                        <span>
+                            {{displayMessage.firstName}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="lastNameId">Last Name</label>
+                <div class="col-md-8">
+                    <input class="form-control" 
+                           id="lastNameId" 
+                           type="text" 
+                           placeholder="Last Name (required)"
+                           formControlName="lastName"
+                           [ngClass]="{'is-invalid': displayMessage.lastName }"
+                        />
+                    <span class="invalid-feedback">
+                        <span >
+                            {{displayMessage.lastName}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="emailId">Email</label>
+                <div class="col-md-8">
+                    <input class="form-control" 
+                           id="emailId" 
+                           type="text" 
+                           placeholder="Email (required)" 
+                           formControlName="email"
+                           [ngClass]="{'is-invalid': displayMessage.email }"/>
+                    <span class="invalid-feedback">
+                        <span>
+                        {{displayMessage.email}}
+                        </span>
+                       
+                    </span>
+                </div>
+            </div>
+
+            <div formGroupName="passwordGroup">
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label" for="passwordId">Password</label>
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                               id="passwordId" 
+                               type="password" 
+                               placeholder="Password (required)" 
+                               formControlName="password"
+                               [ngClass]="{'is-invalid': displayMessage.password }"/>
+                        <span class="invalid-feedback">
+                            <span>
+                                {{displayMessage.password}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-group row mb-2">
+                    <label class="col-md-2 col-form-label" for="confirmPasswordId">Confirm Password</label>
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                               id="confirmPasswordId" 
+                               type="password" 
+                               placeholder="Confirm Password (required)" 
+                               formControlName="confirmPassword"
+                               [ngClass]="{'is-invalid': displayMessage.confirmPassword}"/>
+                        <span class="invalid-feedback">
+                            <span>
+                                {{displayMessage.confirmPassword}}
+                            </span>
+                            <span *ngIf="registerForm.get('passwordGroup').errors?.match">
+                                The passwords do not match.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <div class="offset-md-2 col-md-4">
+                    <button class="btn btn-primary mr-3" 
+                            type="submit" 
+                            style="width:100px" 
+                            [disabled]="!registerForm.valid"
+                        >
+                        Register
+                    </button>
+                    <p>Already have an Account? <a [routerLink]="['/login']">Log in</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
