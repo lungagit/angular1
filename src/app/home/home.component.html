@@ -1,2 +1,17 @@
-<h1>Welcome to the home page</h1>
-<button class="btn btn-outline-primary" type="submit" (click)="onLogout()">Log out</button>
+<nav class="py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+            <li class="nav-item"><a class="nav-link link-dark px-2" [routerLink]="['/adverts']">Advert list</a></li>
+            <li class="nav-item"><a class="nav-link link-dark px-2">FAQs</a></li>
+            <li class="nav-item"><a class="nav-link link-dark px-2">About</a></li>
+        </ul>
+        <div *ngIf="!authenticated" class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2" [routerLink]="['/login']">Sign in</button>
+        </div>
+        <div *ngIf="authenticated" class="col-md-3 text-end">
+            <button type="button" class="btn btn-primary" (click)="onLogout()">Log out</button>
+        </div>
+    </div>
+</nav>
+<header class="py-3 mb-4 border-bottom">
+</header>

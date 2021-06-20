@@ -19,7 +19,7 @@ export class UserService {
     user.id = null;
     return this.http.post<User>(this.userUrl, user, { headers })
       .pipe(
-        tap(data => console.log('createUser: ' + JSON.stringify(data))),       
+        //tap(data => console.log('createUser: ' + JSON.stringify(data))),       
         catchError(this.handleError)
       );
   }

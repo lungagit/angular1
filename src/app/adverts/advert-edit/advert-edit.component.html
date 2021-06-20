@@ -1,0 +1,90 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+
+    <div class="card-body">
+        <form novalidate (ngSubmit)="saveAdvert()" [formGroup]="advertForm">
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="advertNameId">Advert Name</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="headerId" type="text" 
+                           placeholder="Header (required)"
+                           formControlName="header" 
+                           [ngClass]="{'is-invalid': displayMessage.header }" />
+                    <span class="invalid-feedback">
+                        {{displayMessage.header}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="descriptionId">Description</label>
+                <div class="col-md-8">
+                    <textarea class="form-control"
+                              id="descriptionId"
+                              type="text"
+                              placeholder="Description" 
+                              rows=3
+                              formControlName="description" 
+                              [ngClass]="{'is-invalid': displayMessage.description}"></textarea>
+                    <span class="invalid-feedback">
+                        {{ displayMessage.description}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="priceId">Price</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="priceId" 
+                           type="number" 
+                           placeholder="Price (required)"
+                           formControlName="price" 
+                           [ngClass]="{'is-invalid': displayMessage.price }" />
+                    <span class="invalid-feedback">
+                        {{displayMessage.price}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label" for="advertNameId">Date listed</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="dateId" 
+                           type="date" 
+                           formControlName="date"
+                           [ngClass]="{'is-invalid': displayMessage.date }" />
+                    <span class="invalid-feedback">
+                        {{displayMessage.date}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <div class="offset-md-2 col-md-4">
+                    <button class="btn btn-primary mr-3" style="width:80px;" type="submit"
+                        [title]="advertForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                        [disabled]="!advertForm.valid">
+                        Save
+                    </button>
+                    <button class="btn btn-outline-secondary mr-3" style="width:80px;" type="button"
+                        title="Cancel your edits" [routerLink]="['/adverts']">
+                        Cancel
+                    </button>
+                    <button class="btn btn-outline-danger" style="width:80px" type="button" title="Delete this advert"
+                        (click)="deleteAdvert()">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}
+    </div>
+</div>
