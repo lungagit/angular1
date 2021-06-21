@@ -16,9 +16,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([     
-      {path: 'login',component: HomeComponent},
-      {path: '', redirectTo: 'login', pathMatch: 'full'},
-      {path: '**', redirectTo: 'login', pathMatch: 'full'},
+      {path: 'adverts',component: HomeComponent},
+      {path: '', redirectTo: 'adverts', pathMatch: 'full'},
+      {path: '**', redirectTo: 'adverts', pathMatch: 'full'},
     ]),
     AdvertModule,
     NoopAnimationsModule

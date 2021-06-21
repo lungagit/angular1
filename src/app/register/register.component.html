@@ -18,9 +18,10 @@
                            formControlName="firstName"
                            [ngClass]="{'is-invalid': displayMessage.firstName }"                       
                          />
-                    <span class="invalid-feedback">
-                        <span>
-                            {{displayMessage.firstName}}
+                    <span>
+                        <span class="small">
+                            <small> Min 3 characters, max 50 characters</small>
+                            
                         </span>
                     </span>
                 </div>
@@ -36,9 +37,9 @@
                            formControlName="lastName"
                            [ngClass]="{'is-invalid': displayMessage.lastName }"
                         />
-                    <span class="invalid-feedback">
-                        <span >
-                            {{displayMessage.lastName}}
+                    <span>
+                        <span class="small">
+                            <small>Min 3 characters, max 50 characters</small>                           
                         </span>
                     </span>
                 </div>
@@ -50,12 +51,12 @@
                     <input class="form-control" 
                            id="emailId" 
                            type="text" 
-                           placeholder="Email (required)" 
+                           placeholder="Email (required)." 
                            formControlName="email"
                            [ngClass]="{'is-invalid': displayMessage.email }"/>
-                    <span class="invalid-feedback">
-                        <span>
-                        {{displayMessage.email}}
+                    <span>
+                        <span class="small">
+                        <small>Example: test@test.com</small>
                         </span>
                        
                     </span>
@@ -72,9 +73,9 @@
                                placeholder="Password (required)" 
                                formControlName="password"
                                [ngClass]="{'is-invalid': displayMessage.password }"/>
-                        <span class="invalid-feedback">
-                            <span>
-                                {{displayMessage.password}}
+                        <span>
+                            <span class="small">
+                               <small>Min 8 characters</small>
                             </span>
                         </span>
                     </div>
@@ -88,25 +89,24 @@
                                type="password" 
                                placeholder="Confirm Password (required)" 
                                formControlName="confirmPassword"
-                               [ngClass]="{'is-invalid': displayMessage.confirmPassword}"/>
-                        <span class="invalid-feedback">
-                            <span>
-                                {{displayMessage.confirmPassword}}
-                            </span>
-                            <span *ngIf="registerForm.get('passwordGroup').errors?.match">
-                                The passwords do not match.
-                            </span>
-                        </span>
+                               [ngClass]="{'is-invalid': registerForm.get('passwordGroup')?.errors ||
+                                                         displayMessage.confirmPassword}"/>
                     </div>
+                    <span class="invalid-feedback">
+                        <span *ngIf="registerForm.get('passwordGroup').errors?.match">
+                            The passwords do not match
+                        </span>
+                    </span>
                 </div>
             </div>
-
+            <div class="alert alert-danger" *ngIf="invalid">
+                Please fill in all fields
+            </div>
             <div class="form-group row mb-2">
                 <div class="offset-md-2 col-md-4">
                     <button class="btn btn-primary mr-3" 
                             type="submit" 
                             style="width:100px" 
-                            [disabled]="!registerForm.valid"
                         >
                         Register
                     </button>

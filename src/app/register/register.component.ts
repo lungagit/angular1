@@ -1,21 +1,27 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormControlName  } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Observable, fromEvent, merge } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 import { User } from '../users/user';
 import { UserService } from '../users/user.service';
 import { GenericValidator } from '../shared/generic-validator';
+import { AuthenticateService } from '../authenticate/authenticate.service';
 
 function passwordMatcher(c: AbstractControl): {[key: string]: | boolean}| null{
   let passwordControl = c.get('password');
   let confirmContol = c.get('confirmPassword');
 
+  if(passwordControl.pristine || confirmContol.pristine){
+    return null;
+  } 
+  
   if(passwordControl?.value === confirmContol?.value){
     return null;
   }
+  
   return {'match': true};
 }
 
@@ -28,25 +34,27 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   registerForm: FormGroup;
   user: User;
+  invalid: boolean = false;
 
   displayMessage: { [key: string]: string } = {};
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
   constructor(private userService: UserService,
               private fb: FormBuilder,
-              private router: Router ) {
+              private router: Router,
+              private auth: AuthenticateService) {
 
       this.validationMessages = {
         firstName: {
           required: 'First name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.',
+          minlength: 'First name must be at least three characters.',
+          maxlength: 'First name cannot exceed 50 characters.',
           pattern: 'Invalid first name'
         },
         lastName: {
           required: 'Last name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.',
+          minlength: 'Last name must be at least three characters.',
+          maxlength: 'Last name cannot exceed 50 characters.',
           pattern: 'Invalid last name'
         },
         email: {
@@ -60,6 +68,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         },
         confirmPassword: {
           required: 'Please confirm the password.',
+          minlength: 'Password must be at least 8 characters.',
           pattern: 'Invalid password'
         },
         
@@ -70,6 +79,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.auth.isAuthenticated = false;
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
@@ -93,11 +103,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       debounceTime(800)
     ).subscribe(value => {
       this.displayMessage = this.genericValidator.processMessages(this.registerForm);
+
     });
   }
 
   onRegister(): void{
-    let firstName = this.registerForm.get('firstName')?.value;
+    if(this.registerForm.invalid){
+      this.invalid = true;
+      return;
+    }
     let authEmail = this.registerForm.get('email')?.value;
     let authPass = this.registerForm.get('passwordGroup.password')?.value;
 
@@ -117,7 +131,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.userService.registerUser(this.user).subscribe(() =>{
       window.localStorage.setItem('authData', JSON.stringify(authData));
       this.registerForm.reset();
-      this.router.navigate(['/login']);
+      this.auth.login(authEmail, authPass);
+      this.auth.isAuthenticated = true;
+      this.router.navigate(['/adverts']);
     });
   }
 }

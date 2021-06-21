@@ -17,7 +17,7 @@ private advertsUrl = 'api/adverts';
   getAdverts(): Observable<Advert[]> {
     return this.http.get<Advert[]>(this.advertsUrl)
       .pipe(
-        //tap(data => console.log(JSON.stringify(data))),
+        tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -29,7 +29,7 @@ private advertsUrl = 'api/adverts';
     const url = `${this.advertsUrl}/${id}`;
     return this.http.get<Advert>(url)
       .pipe(
-        //tap(data => console.log('getAdvert: ' + JSON.stringify(data))),
+        tap(data => console.log('getAdvert: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -39,7 +39,7 @@ private advertsUrl = 'api/adverts';
     product.id = null;
     return this.http.post<Advert>(this.advertsUrl, product, { headers })
       .pipe(
-        //tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+        tap(data => console.log('createProduct: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -49,7 +49,7 @@ private advertsUrl = 'api/adverts';
     const url = `${this.advertsUrl}/${id}`;
     return this.http.delete<Advert>(url, { headers })
       .pipe(
-        //tap(data => console.log('deleteProduct: ' + id)),
+        tap(data => console.log('deleteProduct: ' + id)),
         catchError(this.handleError)
       );
   }
@@ -59,7 +59,7 @@ private advertsUrl = 'api/adverts';
     const url = `${this.advertsUrl}/${advert.id}`;
     return this.http.put<Advert>(url, advert, { headers })
       .pipe(
-        //tap(() => console.log('updateAdvert: ' + advert.id)),
+        tap(() => console.log('updateAdvert: ' + advert.id)),
         // Return the advert on an update
         map(() => advert),
         catchError(this.handleError)

@@ -6,9 +6,6 @@
               (ngSubmit)="onLogin(email, password)">
             <h1>Welcome</h1>
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-            <div class="alert alert-danger" *ngIf="invalid">
-                Incorrect email or password
-            </div>
             <div class="form-floating">
                 <input type="email" 
                        class="form-control" 
@@ -46,9 +43,12 @@
                     </span>
                 </span>
             </div>
+            <div class="alert alert-danger" *ngIf="invalid">
+                Incorrect email or password
+            </div>
             <button class="w-100 btn btn-lg btn-primary" 
                     type="submit"
-                    [disabled]="!loginForm.valid">
+                    >
                     Sign in
             </button>                      
         </form>

@@ -1,15 +1,12 @@
 <div class="card">
     <div class="card-header">
-        <div style="padding-bottom: 5px;">
-            <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form> -->
-        </div>
-        <div>
-            <button type="button" class="btn btn-outline-primary me-2" [routerLink]="['/adverts/0/edit']">Add Advert</button>
+        <div class="row">
+            <div class="col-md-2">Search Product:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="listFilter" />
+            </div>
         </div>
     </div>
-
     <div class="card-body">
         <div class="table-responsive">
             <table class="table mb-0" *ngIf="adverts && adverts.length">
@@ -22,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let advert of adverts">
+                    <tr *ngFor="let advert of filteredAdverts">
                         <td>
                             <a>
                                 {{ advert.header }}
@@ -32,9 +29,9 @@
                         <td>{{ advert.price | currency:"R":"symbol":"1.2-2"}}</td>
                         <td>{{ advert.date }}</td>
                         <td>
-                            <button class="btn btn-outline-primary btn-sm"
-                                [routerLink]="['/adverts', advert.id, 'edit']">
-                                Edit
+                            <button *ngIf="authenticated" class="btn btn-outline-primary btn-sm"
+                                [routerLink]="['/adverts', advert.id]">
+                                Buy
                             </button>
                         </td>
                     </tr>

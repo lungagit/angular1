@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header" *ngIf="advert">
+        {{pageTitle + ": " + advert.header}}
+    </div>
+
+    <div class="card-body" *ngIf="advert">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">Name:</div>
+                    <div class="col-md-6">{{advert.header}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Description:</div>
+                    <div class="col-md-6">{{advert.description}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Availability:</div>
+                    <div class="col-md-6">{{advert.date}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Price:</div>
+                    <div class="col-md-6">{{advert.price|currency:"R":"symbol"}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <button class="btn btn-outline-secondary mr-3" style="width:100px" [routerLink]="['/adverts']">
+                    <i class="fa fa-chevron-left"></i> Cancel
+                </button>
+                <button class="btn btn-outline-primary" style="width:100px" [routerLink]="['/adverts']">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}
+    </div>
+</div>
+

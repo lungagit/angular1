@@ -13,12 +13,12 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.auth.isAuthenticated = true;
+    this.auth.isAuthenticated = false;
 
   }
   public get authenticated(): boolean {
     return this.auth.isAuthenticated;
-}
+  }
   onLogout(): void{
     this.auth.logout();
   }

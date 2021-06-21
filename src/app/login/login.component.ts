@@ -18,12 +18,17 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(email: string, password: string): void{
-    const authData = window.JSON.parse(localStorage.getItem('authData'))
-
-    if((email !== authData.authEmail) || (password !== authData.authPass)) {
+    if(this.email === '' || this.password === ''){
       this.invalid = true;
       return;
     }
+    const authData = window.JSON.parse(localStorage.getItem('authData'))
+
+    if((email !== authData?.authEmail) || (password !== authData?.authPass)) {
+      this.invalid = true;
+      return;
+    }
+    this.invalid = false;
     this.auth.login(email, password);
   }
 }
