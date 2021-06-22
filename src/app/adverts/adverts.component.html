@@ -5,6 +5,9 @@
             <div class="col-md-4">
                 <input type="text" [(ngModel)]="listFilter" />
             </div>
+            <div *ngIf="authenticated">
+                <button type="button" class="btn btn-outline-primary me-2" [routerLink]="['/adverts/0/edit']">Add Advert</button>
+            </div>
         </div>
     </div>
     <div class="card-body">
@@ -29,8 +32,16 @@
                         <td>{{ advert.price | currency:"R":"symbol":"1.2-2"}}</td>
                         <td>{{ advert.date }}</td>
                         <td>
-                            <button *ngIf="authenticated" class="btn btn-outline-primary btn-sm"
-                                [routerLink]="['/adverts', advert.id]">
+                            <button *ngIf="authenticated" 
+                                    class="btn btn-outline-primary btn-sm" 
+                                    [routerLink]="['/adverts', advert.id, 'edit']">
+                                Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button *ngIf="authenticated" 
+                                    class="btn btn-outline-primary btn-sm"
+                                    [routerLink]="['/adverts', advert.id]">
                                 Buy
                             </button>
                         </td>

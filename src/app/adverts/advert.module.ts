@@ -34,6 +34,11 @@ import { AdvertDetailComponent } from './advert-detail/advert-detail.component';
         path: 'adverts/:id',
         canActivate: [AuthGuard],
         component: AdvertDetailComponent
+      },
+      {
+        path: 'adverts/:id/edit',
+        canActivate: [AuthGuard],
+        component: AdvertEditComponent
       }
     ])
   ],
